@@ -1,53 +1,14 @@
-module Schema1 exposing (main, result)
+module Schema1 exposing (DbDocument, dbDocumentDecoder, toReactRenderable)
 
-import Html exposing (Html, text)
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline exposing (required)
-import Result
+import ReactRenderable exposing (ReactRenderable(..))
 
 
 
--- Example
-
-
-exampleData : String
-exampleData =
-    """
-    {
-        "name": "John Doe",
-        "age": 30,
-        "dogName": "Rex",
-        "isDogOwner": true
-    }
-    """
-
-
-result : Result Decode.Error ReactRenderable
-result =
-    Decode.decodeString dbDocumentDecoder exampleData
-        |> Result.map toReactRenderable
-
-
-main : Html msg
-main =
-    text "Hello"
-
-
-
--- Not editable by support engineer
-
-
-type ReactRenderable
-    = Int { name : String, value : Int }
-    | String { name : String, value : String }
-    | BoolValue { name : String, value : Bool }
-    | Nested (List ReactRenderable)
-
-
-
--- Editable by support engineer:
---
--- Required to be implemented: DbDocument, dbDocumentDecoder, toReactRenderable
+-- This module is editable by the support engineer.
+-- Required components of the schema: DbDocument, dbDocumentDecoder, toReactRenderable
+-- Type signatures must be preserved.
 
 
 type alias DbDocument =

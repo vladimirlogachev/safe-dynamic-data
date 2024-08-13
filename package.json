@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "postinstall": "elm-tooling install",
+    "start": "npm run build:worker && vite",
+    "prebuild": "elm-tooling install",
+    "build": "npm run build:worker && vite build",
+    "build:worker": "vite build --config worker.config.js",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "elm-tooling": "^1.15.1",
+    "vite": "^5.4.0",
+    "vite-plugin-elm": "^3.0.1"
+  },
+  "dependencies": {}
+}

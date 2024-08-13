@@ -1,23 +1,23 @@
 # safe-dynamic-data
 
-## prerequisites
+## Prerequisites
+
+- node.js
 
 ```sh
-npm i -g elm
+npm install
 ```
 
-## usage
-
-- build
+## Development
 
 ```sh
-sh build.sh
+npm start
 ```
+- See output in the browser console
 
-- try in repl
+## Build and Serve
 
 ```sh
-elm repl
-import Schema1
-Schema1.result
+npm run build && npm run serve
 ```
+- See output in the browser console
