@@ -9,7 +9,7 @@ const exampleData = `{
         "isDogOwner": true
     }`;
 
-worker.onmessage = function ({ data }) {
+worker.onmessage = ({ data }) => {
   console.log("Worker said:", data);
 };
 
