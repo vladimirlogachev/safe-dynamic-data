@@ -73,4 +73,5 @@ toReactRenderable doc =
         [ String { name = "Name", value = doc.name }
         , Int { name = "Age", value = doc.age }
         , String { name = "Dog Name", value = doc.dogName }
+        , BoolValue { name = "Is Dog Owner", value = doc.isDogOwner }
         ]
