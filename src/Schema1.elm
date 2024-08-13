@@ -1,6 +1,6 @@
 module Schema1 exposing (main, result)
 
-import Html exposing (Html, i, text)
+import Html exposing (Html, text)
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline exposing (required)
 import Result
