@@ -6,6 +6,7 @@ import Platform
 import Ports
 import ReactRenderable exposing (ReactRenderable(..))
 import Schema1
+import SchemaError exposing (SchemaError(..))
 
 
 
@@ -21,12 +22,13 @@ main =
         }
 
 
-processInput : String -> Result Decode.Error ReactRenderable
+processInput : String -> Result SchemaError ReactRenderable
 processInput =
-    Decode.decodeString Schema1.dbDocumentDecoder >> Result.map Schema1.toReactRenderable
+    (Decode.decodeString Schema1.dbDocumentDecoder >> Result.mapError DecodeError)
+        >> Result.andThen (Schema1.toReactRenderable >> Result.mapError TransformError)
 
 
-encodeResult : (a -> Json.Encode.Value) -> Result Decode.Error a -> Json.Encode.Value
+encodeResult : (a -> Json.Encode.Value) -> Result SchemaError a -> Json.Encode.Value
 encodeResult encodeValue r =
     case r of
         Ok a ->
@@ -35,4 +37,4 @@ encodeResult encodeValue r =
 
         Err e ->
             Json.Encode.object
-                [ ( "Err", Json.Encode.string <| Decode.errorToString e ) ]
+                [ ( "Err", SchemaError.encode e ) ]

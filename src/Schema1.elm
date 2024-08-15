@@ -3,6 +3,7 @@ module Schema1 exposing (DbDocument, dbDocumentDecoder, toReactRenderable)
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline exposing (required)
 import ReactRenderable exposing (ReactRenderable(..))
+import SchemaError exposing (SchemaError(..))
 
 
 
@@ -28,11 +29,16 @@ dbDocumentDecoder =
         |> required "isDogOwner" Decode.bool
 
 
-toReactRenderable : DbDocument -> ReactRenderable
+toReactRenderable : DbDocument -> Result String ReactRenderable
 toReactRenderable doc =
-    Nested
-        [ String { name = "Name", value = doc.name }
-        , Int { name = "Age", value = doc.age }
-        , String { name = "Dog Name", value = doc.dogName }
-        , BoolValue { name = "Is Dog Owner", value = doc.isDogOwner }
-        ]
+    if doc.age >= 30 && not doc.isDogOwner then
+        Err "Every person over 30 must own a dog."
+
+    else
+        Ok <|
+            Nested
+                [ String { name = "Name", value = doc.name }
+                , Int { name = "Age", value = doc.age }
+                , String { name = "Dog Name", value = doc.dogName }
+                , BoolValue { name = "Is Dog Owner", value = doc.isDogOwner }
+                ]
